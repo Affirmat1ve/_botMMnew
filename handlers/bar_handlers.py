@@ -12,7 +12,7 @@ from states import CocktailStates
 
 now = datetime.now()
 log = open(now.strftime("%d-%m-%y--%H-%M") + '.log', 'w')
-
+flog = open('full'+now.strftime("%d-%m-%y--%H-%M") + '.log', 'w')
 
 @dp.message(F.text == 'отмена')
 async def any_message_menu_respond(message: Message, state: FSMContext):
@@ -76,6 +76,8 @@ async def issuance_cocktail(callback: CallbackQuery):
 @dp.callback_query(Callbacks.YesNoCallback.filter((F.payload == 'cocktail') & (F.yes == 'yes')))
 async def issuance_yes(callback: CallbackQuery):
     log.write(callback.message.text.partition('\n')[0][9:] + '\n')
+    qwe = datetime.now()
+    flog.write(qwe.strftime("%d-%m-%y--%H-%M")+': '+callback.message.text+'\n')
     await callback.message.delete()
 
 
